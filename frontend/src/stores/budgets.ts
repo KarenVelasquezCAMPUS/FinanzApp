@@ -36,5 +36,16 @@ export const useBudgetsStore = defineStore('budgets', () => {
         }
     }
 
-    return { budgets, fetchBudgets, createBudget, deleteBudget };
+    async function updateBudget(id: number, budget: any) {
+        try {
+            await api.patch(`/presupuestos/${id}`, budget);
+            await fetchBudgets();
+            return true;
+        } catch (error) {
+            console.error('Error updating budget', error);
+            return false;
+        }
+    }
+
+    return { budgets, fetchBudgets, createBudget, updateBudget, deleteBudget };
 });

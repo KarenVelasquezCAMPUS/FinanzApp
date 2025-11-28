@@ -22,10 +22,8 @@ export const useAuthStore = defineStore('auth', () => {
 
     async function register(credentials: any) {
         try {
-            const { data } = await api.post('/auth/register', credentials);
-            token.value = data.access_token;
-            user.value = data.user;
-            localStorage.setItem('token', data.access_token);
+            await api.post('/auth/register', credentials);
+            // No guardamos el token, el usuario debe iniciar sesión manualmente
             return true;
         } catch (error) {
             console.error('Registration failed', error);

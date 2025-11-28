@@ -46,5 +46,16 @@ export const useMovementsStore = defineStore('movements', () => {
         }
     }
 
-    return { movements, summary, fetchMovements, fetchMonthlySummary, createMovement, deleteMovement };
+    async function updateMovement(id: number, movement: any) {
+        try {
+            await api.patch(`/movimientos/${id}`, movement);
+            await fetchMovements();
+            return true;
+        } catch (error) {
+            console.error('Error updating movement', error);
+            return false;
+        }
+    }
+
+    return { movements, summary, fetchMovements, fetchMonthlySummary, createMovement, deleteMovement, updateMovement };
 });

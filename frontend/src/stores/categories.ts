@@ -36,5 +36,16 @@ export const useCategoriesStore = defineStore('categories', () => {
         }
     }
 
-    return { categories, fetchCategories, createCategory, deleteCategory };
+    async function updateCategory(id: number, category: any) {
+        try {
+            await api.patch(`/categorias/${id}`, category);
+            await fetchCategories();
+            return true;
+        } catch (error) {
+            console.error('Error updating category', error);
+            return false;
+        }
+    }
+
+    return { categories, fetchCategories, createCategory, updateCategory, deleteCategory };
 });
